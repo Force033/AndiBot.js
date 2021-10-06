@@ -1,8 +1,8 @@
 const aoi = require("aoi.js")
-const fs = require("fs")
+
 
 const bot = new aoi.Bot({
-token: "ODQ4NTY4NzI1ODAzNzYxNjg1.YLOhNQ.98_isV8yH2RDu3Jx6ePT2IzTNAc",
+token: "gg",
 prefix: "$getServerVar[prefix]"
 })
 const express = require('express');
@@ -148,13 +148,16 @@ bot.variables({
 })
 
  //commands handler
-var reader = fs.readdirSync("./commands/").filter (file => file.endsWith(".js"))
-for(const file of reader) {
-  const command = require(`./commands/${file}`)
-  bot.command({
-name: command.name, 
-code: command.code
-  })
+const folders = fs.readdirSync("./commands/")
+
+for (const files of folders) {
+const folder = fs.readdirSync(`./commands/${files}/`).filter(file => file.endsWith(".js"))
+
+for (const commands of folder) {
+const command = require(`./commands/${files}/${commands}`) 
+bot.command(command)
+}
+
 }
 
 
